@@ -53,14 +53,14 @@
         android:layout_gravity="center" />
 
     <!-- Change the button into a camera icon -->
-    <Button
+    <ImageButton
         android:id="@+id/camera"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="91dp"
+        android:layout_height="88dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:textStyle="bold"
-        android:text="camera" />
+        android:src="@drawable/camera"
+        android:textStyle="bold" />
 
 
 </FrameLayout>

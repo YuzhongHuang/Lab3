@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -21,7 +22,7 @@ public class ClueFetch extends Fragment {
     TextView curClue;
     TextView totalClue;
     VideoView clueVideo;
-    Button camera;
+    ImageButton camera;
 
 
     @Override
@@ -39,8 +40,8 @@ public class ClueFetch extends Fragment {
         curClue = (TextView) rootView.findViewById(R.id.currentClue);
         totalClue = (TextView) rootView.findViewById(R.id.totalClue);
         clueVideo = (VideoView) rootView.findViewById(R.id.videoClue);
-        camera = (Button) rootView.findViewById(R.id.camera);
-        
+        camera = (ImageButton) rootView.findViewById(R.id.camera);
+
         return rootView;
     }
 
