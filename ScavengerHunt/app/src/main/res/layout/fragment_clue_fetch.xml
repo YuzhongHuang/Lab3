@@ -47,7 +47,7 @@
         android:textSize="30sp" />
 
     <VideoView
-        android:id="@+id/videoView"
+        android:id="@+id/videoClue"
         android:layout_width="wrap_content"
         android:layout_height="262dp"
         android:layout_gravity="center" />
