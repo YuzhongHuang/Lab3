@@ -15,20 +15,13 @@ import com.example.yhuang.scavengerhunt.R;
 
 public class ClueFetch extends Fragment {
 
-    public ClueFetch() {
-        // Required empty public constructor
-    }
-
     TextView curClue;
     TextView totalClue;
     VideoView clueVideo;
     ImageButton camera;
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public ClueFetch() {
+        // Required empty public constructor
     }
 
     @Override
@@ -41,6 +34,13 @@ public class ClueFetch extends Fragment {
         totalClue = (TextView) rootView.findViewById(R.id.totalClue);
         clueVideo = (VideoView) rootView.findViewById(R.id.videoClue);
         camera = (ImageButton) rootView.findViewById(R.id.camera);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return rootView;
     }
