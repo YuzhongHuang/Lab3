@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clue_fetch"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/clue_fetch"
     tools:context="com.example.yhuang.scavengerhunt.Fragments.ClueFetch">
 
     <!-- TODO: Update blank fragment layout -->
@@ -56,12 +56,27 @@
     <!-- Change the button into a camera icon -->
     <ImageButton
         android:id="@+id/camera"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="91dp"
         android:layout_height="88dp"
         android:layout_gravity="center_horizontal|bottom"
         android:src="@drawable/camera"
         android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:padding="0dp"
+        android:src="@drawable/prev" />
+
+    <ImageButton
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:padding="0dp"
+        android:src="@drawable/next" />
 
 
 </FrameLayout>

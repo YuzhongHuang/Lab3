@@ -19,6 +19,8 @@ public class ClueFetch extends Fragment {
     TextView curClue;
     TextView totalClue;
     VideoView clueVideo;
+    ImageButton prev;
+    ImageButton next;
     ImageButton camera;
 
     public ClueFetch() {
@@ -35,12 +37,28 @@ public class ClueFetch extends Fragment {
         totalClue = (TextView) rootView.findViewById(R.id.totalClue);
         clueVideo = (VideoView) rootView.findViewById(R.id.videoClue);
         camera = (ImageButton) rootView.findViewById(R.id.camera);
+        prev = (ImageButton) rootView.findViewById(R.id.prev);
+        next = (ImageButton) rootView.findViewById(R.id.next);
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivity(intent);
+            }
+        });
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
