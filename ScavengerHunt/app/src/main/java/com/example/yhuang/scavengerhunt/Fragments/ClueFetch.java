@@ -1,12 +1,13 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -38,7 +39,8 @@ public class ClueFetch extends Fragment {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivity(intent);
             }
         });
 

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/clue_fetch"
     tools:context="com.example.yhuang.scavengerhunt.Fragments.ClueFetch">
 
     <!-- TODO: Update blank fragment layout -->
