@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 
 import android.provider.MediaStore;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,8 @@ public class ClueFetch extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Log.d("lalalala:", "llalalla");
+
                 if (getSpot) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivity(intent);
@@ -72,6 +75,8 @@ public class ClueFetch extends Fragment {
                             //nothing
                         }
                     });
+
+                    alertDialogBuilder.show();
                 }
             }
         });
@@ -96,6 +101,8 @@ public class ClueFetch extends Fragment {
                     }
                 });
 
+                alertDialogBuilder.show();
+
             }
         });
 
@@ -118,6 +125,8 @@ public class ClueFetch extends Fragment {
                         //nothing
                     }
                 });
+
+                alertDialogBuilder.show();
             }
         });
 
