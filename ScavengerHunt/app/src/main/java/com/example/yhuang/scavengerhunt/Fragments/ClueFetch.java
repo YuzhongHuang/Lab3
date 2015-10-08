@@ -1,66 +1,127 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import android.provider.MediaStore;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.yhuang.scavengerhunt.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClueFetch#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ClueFetch extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClueFetch.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ClueFetch newInstance(String param1, String param2) {
-        ClueFetch fragment = new ClueFetch();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    TextView curClue;
+    TextView totalClue;
+    VideoView clueVideo;
+    ImageButton prev;
+    ImageButton next;
+    ImageButton camera;
+    Boolean getSpot;
 
     public ClueFetch() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_clue_fetch, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
+
+        curClue = (TextView) rootView.findViewById(R.id.currentClue);
+        totalClue = (TextView) rootView.findViewById(R.id.totalClue);
+        clueVideo = (VideoView) rootView.findViewById(R.id.videoClue);
+        camera = (ImageButton) rootView.findViewById(R.id.camera);
+        prev = (ImageButton) rootView.findViewById(R.id.prev);
+        next = (ImageButton) rootView.findViewById(R.id.next);
+        getSpot = false;
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (getSpot) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivity(intent);
+                } else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setMessage(R.string.hint_message);
+
+                    alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(), "hint",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    alertDialogBuilder.setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //nothing
+                        }
+                    });
+                }
+            }
+        });
+
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setMessage(R.string.clue_switch_message);
+
+                alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //prev()
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //nothing
+                    }
+                });
+
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setMessage(R.string.clue_switch_message);
+
+                alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //next()
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //nothing
+                    }
+                });
+            }
+        });
+
+        return rootView;
     }
 
 
