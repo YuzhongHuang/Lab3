@@ -11,5 +11,6 @@
     <string name="slash">/</string>
     <string name="yes">Yes</string>
     <string name="go_back">Go Back</string>
+    <string name="hint_message">Please get close to the spot to take a picture. Do you want a hint?</string>
     <string name="clue_switch_message">Are you sure to skip this challenge?</string>
 </resources>
