@@ -49,8 +49,8 @@
 
     <VideoView
         android:id="@+id/videoClue"
-        android:layout_width="wrap_content"
-        android:layout_height="262dp"
+        android:layout_width="match_parent"
+        android:layout_height="249dp"
         android:layout_gravity="center" />
 
     <!-- Change the button into a camera icon -->
@@ -64,16 +64,18 @@
 
     <ImageButton
         android:id="@+id/prev"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="left|top"
         android:padding="0dp"
         android:src="@drawable/prev" />
 
     <ImageButton
         android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="right|top"
         android:padding="0dp"
         android:src="@drawable/next" />
