@@ -1,14 +1,12 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
 import android.provider.MediaStore;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +70,8 @@ public class ClueFetch extends Fragment {
                             //nothing
                         }
                     });
+
+                    alertDialogBuilder.show();
                 }
             }
         });
@@ -96,6 +96,7 @@ public class ClueFetch extends Fragment {
                     }
                 });
 
+                alertDialogBuilder.show();
             }
         });
 
@@ -118,11 +119,9 @@ public class ClueFetch extends Fragment {
                         //nothing
                     }
                 });
+                alertDialogBuilder.show();
             }
         });
-
         return rootView;
     }
-
-
 }
