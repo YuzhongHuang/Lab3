@@ -1,8 +1,10 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.provider.MediaStore;
@@ -48,7 +50,17 @@ public class ClueFetch extends Fragment {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Using PackageManager to check if an Android device has a camera from within a fragment
+                Context context = getActivity();
+                PackageManager packageManager = context.getPackageManager();
 
+                if(!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+                    Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
+
+                //Check if the user have reached the spot or not
                 if (getSpot) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivity(intent);
