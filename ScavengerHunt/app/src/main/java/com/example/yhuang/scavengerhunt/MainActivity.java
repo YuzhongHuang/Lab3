@@ -1,5 +1,6 @@
 package com.example.yhuang.scavengerhunt;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Fragment transaction for switching between fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        changeToClue();
 
-        ImageUpload image_fragment = new ImageUpload();
-        fragmentTransaction.add(R.id.fragment_activity, image_fragment);
-        fragmentTransaction.commit();
     }
 
     @Override
@@ -50,17 +46,25 @@ public class MainActivity extends AppCompatActivity {
 
     //Change to a clue fragment
     public void changeToClue() {
-        FragmentTransaction fTrac = getSupportFragmentManager().beginTransaction();
         ClueFetch clue_fragment = new ClueFetch();
-        fTrac.replace(R.id.fragment_activity, clue_fragment);
-        fTrac.commit();
+        transitionToFragment(clue_fragment);
     }
 
     //Change to a GPS fragment
     public void changeToGps() {
-        FragmentTransaction fTrac = getSupportFragmentManager().beginTransaction();
         GpsDetection gps_fragment = new GpsDetection();
-        fTrac.replace(R.id.fragment_activity, gps_fragment);
-        fTrac.commit();
+        transitionToFragment(gps_fragment);
+    }
+
+    public void changeToImage() {
+        ImageUpload image_fragment = new ImageUpload();
+        transitionToFragment(image_fragment);
+    }
+
+    public void transitionToFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_activity, fragment);
+        transaction.commit();
     }
 }
