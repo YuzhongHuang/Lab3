@@ -44,23 +44,33 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Change to a clue fragment
+    /*
+    Change to a ClueFetch fragment
+     */
     public void changeToClue() {
         ClueFetch clue_fragment = new ClueFetch();
         transitionToFragment(clue_fragment);
     }
 
-    //Change to a GPS fragment
+    /*
+    Change to a GPS fragment
+     */
     public void changeToGps() {
         GpsDetection gps_fragment = new GpsDetection();
         transitionToFragment(gps_fragment);
     }
 
+    /*
+    Change to a ImageUpload fragment
+     */
     public void changeToImage() {
         ImageUpload image_fragment = new ImageUpload();
         transitionToFragment(image_fragment);
     }
 
+    /*
+    A general method for fragments transition
+     */
     public void transitionToFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
