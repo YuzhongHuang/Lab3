@@ -6,4 +6,4 @@ gradle/*
 /captures
 .gradle
 *.iml
-misc.xml
+ScavengerHunt\.idea\misc.xml
