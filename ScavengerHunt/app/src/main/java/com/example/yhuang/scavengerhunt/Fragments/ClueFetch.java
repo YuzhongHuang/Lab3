@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.R;
 
 public class ClueFetch extends Fragment {
@@ -45,7 +46,7 @@ public class ClueFetch extends Fragment {
         camera = (ImageButton) rootView.findViewById(R.id.camera);
         prev = (ImageButton) rootView.findViewById(R.id.prev);
         next = (ImageButton) rootView.findViewById(R.id.next);
-        getSpot = false;
+        getSpot = true;
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +63,7 @@ public class ClueFetch extends Fragment {
 
                 //Check if the user have reached the spot or not
                 if (getSpot) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Intent intent = new Intent(getActivity(), CameraActivity.class);
                     startActivity(intent);
                 } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());

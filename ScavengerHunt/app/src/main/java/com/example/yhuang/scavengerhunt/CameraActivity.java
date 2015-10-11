@@ -100,9 +100,6 @@ public class CameraActivity extends AppCompatActivity {
 
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        }
-        return false;
+        return state.equals(Environment.MEDIA_MOUNTED);
     }
 }
