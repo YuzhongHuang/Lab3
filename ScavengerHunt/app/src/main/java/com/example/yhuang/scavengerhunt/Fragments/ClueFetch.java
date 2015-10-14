@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.R;
 
@@ -40,13 +37,13 @@ public class ClueFetch extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
 
-        curClue = (TextView) rootView.findViewById(R.id.currentClue);
-        totalClue = (TextView) rootView.findViewById(R.id.totalClue);
-        clueVideo = (VideoView) rootView.findViewById(R.id.videoClue);
-        camera = (ImageButton) rootView.findViewById(R.id.camera);
-        prev = (ImageButton) rootView.findViewById(R.id.prev);
-        next = (ImageButton) rootView.findViewById(R.id.next);
-        getSpot = true;
+        curClue = (TextView) rootView.findViewById(R.id.currentClue); //current clue index
+        totalClue = (TextView) rootView.findViewById(R.id.totalClue); //total clue index
+        clueVideo = (VideoView) rootView.findViewById(R.id.videoClue); //video for the current clue
+        camera = (ImageButton) rootView.findViewById(R.id.camera); //camera button
+        prev = (ImageButton) rootView.findViewById(R.id.prev); //travel to the previous clue
+        next = (ImageButton) rootView.findViewById(R.id.next); //skip to the next clue
+        getSpot = true; //indicates whether does the user get the spot or not.
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +52,7 @@ public class ClueFetch extends Fragment {
                 Context context = getActivity();
                 PackageManager packageManager = context.getPackageManager();
 
+                //Check whether the device has a camera or not
                 if(!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                     Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
                             .show();
@@ -63,9 +61,12 @@ public class ClueFetch extends Fragment {
 
                 //Check if the user have reached the spot or not
                 if (getSpot) {
+                    //send intent to CameraActivity
                     Intent intent = new Intent(getActivity(), CameraActivity.class);
                     startActivity(intent);
                 } else {
+                    //Shows that user still doesn't get the spot yet
+                    //and ask them whether they want hint or not
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setMessage(R.string.hint_message);
 
