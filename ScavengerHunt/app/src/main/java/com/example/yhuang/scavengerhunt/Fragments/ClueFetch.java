@@ -1,11 +1,12 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
+import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.R;
 
 public class ClueFetch extends Fragment {
@@ -24,7 +25,10 @@ public class ClueFetch extends Fragment {
     ImageButton prev;
     ImageButton next;
     ImageButton camera;
+    GpsDetection gpsInfo;
     Boolean getSpot;
+    Context context;
+    PackageManager packageManager;
 
     public ClueFetch() {
         // Required empty public constructor
@@ -36,31 +40,44 @@ public class ClueFetch extends Fragment {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
 
-        curClue = (TextView) rootView.findViewById(R.id.currentClue);
-        totalClue = (TextView) rootView.findViewById(R.id.totalClue);
-        clueVideo = (VideoView) rootView.findViewById(R.id.videoClue);
-        camera = (ImageButton) rootView.findViewById(R.id.camera);
-        prev = (ImageButton) rootView.findViewById(R.id.prev);
-        next = (ImageButton) rootView.findViewById(R.id.next);
-        getSpot = false;
+        curClue = (TextView) rootView.findViewById(R.id.currentClue); //current clue index
+        totalClue = (TextView) rootView.findViewById(R.id.totalClue); //total clue index
+        clueVideo = (VideoView) rootView.findViewById(R.id.videoClue); //video for the current clue
+        camera = (ImageButton) rootView.findViewById(R.id.camera); //camera button
+        prev = (ImageButton) rootView.findViewById(R.id.prev); //travel to the previous clue
+        next = (ImageButton) rootView.findViewById(R.id.next); //skip to the next clue
+
+        gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
+        getSpot = true; //indicates whether does the user get the spot or not.
+        context = getActivity(); //get the context
+        packageManager = context.getPackageManager(); // get the Package Manager
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                GpsDetection gpsInfo = new GpsDetection(rootView.getContext());
+                //update user's GPS status
                 getSpot = gpsInfo.canGetLocation();
 
+                //Using PackageManager to check if an Android device has a camera from within a fragment
+                if(!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+                    Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
+
+                //Check if the user have reached the spot or not
                 if (getSpot) {
-                    double latitude = gpsInfo.latitudeInfo();
-                    double longitude = gpsInfo.longitudeInfo();
+                    //double latitude = gpsInfo.latitudeInfo();
+                    //double longitude = gpsInfo.longitudeInfo();
 
-                    // \n is for new line
-                    Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    //send intent to CameraActivity
+                    Intent intent = new Intent(getActivity(), CameraActivity.class);
                     startActivity(intent);
                 } else {
+                    //Shows that user still doesn't get the spot yet
+                    //and ask them whether they want hint or not
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setMessage(R.string.hint_message);
 
