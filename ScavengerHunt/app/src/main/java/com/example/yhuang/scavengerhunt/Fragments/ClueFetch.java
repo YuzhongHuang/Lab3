@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class ClueFetch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
 
         curClue = (TextView) rootView.findViewById(R.id.currentClue);
         totalClue = (TextView) rootView.findViewById(R.id.totalClue);
@@ -49,7 +48,16 @@ public class ClueFetch extends Fragment {
             @Override
             public void onClick(View v) {
 
+                GpsDetection gpsInfo = new GpsDetection(rootView.getContext());
+                getSpot = gpsInfo.canGetLocation();
+
                 if (getSpot) {
+                    double latitude = gpsInfo.latitudeInfo();
+                    double longitude = gpsInfo.longitudeInfo();
+
+                    // \n is for new line
+                    Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivity(intent);
                 } else {
