@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
         transitionToFragment(clue_fragment);
     }
 
-    //Change to a GPS fragment
+    /*Change to a GPS fragment
     public void changeToGps() {
         GpsDetection gps_fragment = new GpsDetection();
         transitionToFragment(gps_fragment);
-    }
+    }*/
 
     public void changeToImage() {
         ImageUpload image_fragment = new ImageUpload();

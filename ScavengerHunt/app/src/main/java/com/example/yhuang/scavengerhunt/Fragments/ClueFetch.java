@@ -25,7 +25,10 @@ public class ClueFetch extends Fragment {
     ImageButton prev;
     ImageButton next;
     ImageButton camera;
+    GpsDetection gpsInfo;
     Boolean getSpot;
+    Context context;
+    PackageManager packageManager;
 
     public ClueFetch() {
         // Required empty public constructor
@@ -35,7 +38,7 @@ public class ClueFetch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
 
         curClue = (TextView) rootView.findViewById(R.id.currentClue); //current clue index
         totalClue = (TextView) rootView.findViewById(R.id.totalClue); //total clue index
@@ -43,16 +46,19 @@ public class ClueFetch extends Fragment {
         camera = (ImageButton) rootView.findViewById(R.id.camera); //camera button
         prev = (ImageButton) rootView.findViewById(R.id.prev); //travel to the previous clue
         next = (ImageButton) rootView.findViewById(R.id.next); //skip to the next clue
+
+        gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
         getSpot = true; //indicates whether does the user get the spot or not.
+        context = getActivity(); //get the context
+        packageManager = context.getPackageManager(); // get the Package Manager
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Using PackageManager to check if an Android device has a camera from within a fragment
-                Context context = getActivity();
-                PackageManager packageManager = context.getPackageManager();
+                //update user's GPS status
+                getSpot = gpsInfo.canGetLocation();
 
-                //Check whether the device has a camera or not
+                //Using PackageManager to check if an Android device has a camera from within a fragment
                 if(!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                     Toast.makeText(getActivity(), "This device does not have a camera.", Toast.LENGTH_SHORT)
                             .show();
@@ -61,6 +67,11 @@ public class ClueFetch extends Fragment {
 
                 //Check if the user have reached the spot or not
                 if (getSpot) {
+                    //double latitude = gpsInfo.latitudeInfo();
+                    //double longitude = gpsInfo.longitudeInfo();
+
+                    //Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
                     //send intent to CameraActivity
                     Intent intent = new Intent(getActivity(), CameraActivity.class);
                     startActivity(intent);
