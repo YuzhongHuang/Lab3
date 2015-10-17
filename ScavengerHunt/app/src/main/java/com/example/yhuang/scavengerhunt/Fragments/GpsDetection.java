@@ -36,6 +36,11 @@ public class GpsDetection extends Service implements LocationListener {
     double latitude; // latitude
     double longitude; // longitude
 
+    double Latitude; // latitude
+    double Longitude; // longitude
+
+    private double R = 6371; //Radius of the Earth
+
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 5 meters
 
@@ -135,6 +140,16 @@ public class GpsDetection extends Service implements LocationListener {
 
     public boolean canGetLocation() {
         return this.canGetLocation;
+    }
+
+    public double haversineDist(double latitude, double longitude, double Latitude, double Longitute) {
+        double dLat = (Math.PI/180)*latitude-Latitude;
+        double dLon = (Math.PI/180)*longitude-Longitude;
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos((Math.PI/180)*latitude) *
+                   Math.cos((Math.PI/180)*Latitude)* Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = R * c; // Distance in km
+        return d;
     }
 
 
