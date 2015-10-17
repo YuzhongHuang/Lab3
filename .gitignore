@@ -7,3 +7,5 @@ gradle/*
 .gradle
 *.iml
 ScavengerHunt\.idea\misc.xml
+ScavengerHunt/.idea/gradle.xml
+ScavengerHunt/.idea/misc.xml
