@@ -5,17 +5,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.R;
+
 
 public class ClueFetch extends Fragment {
 
@@ -29,6 +33,7 @@ public class ClueFetch extends Fragment {
     Boolean getSpot;
     Context context;
     PackageManager packageManager;
+    Uri uri;
 
     public ClueFetch() {
         // Required empty public constructor
@@ -51,6 +56,22 @@ public class ClueFetch extends Fragment {
         getSpot = true; //indicates whether does the user get the spot or not.
         context = getActivity(); //get the context
         packageManager = context.getPackageManager(); // get the Package Manager
+
+        //temporary use
+        //***************************** change later
+        try {
+            uri = Uri.parse("https://s3.amazonaws.com/olin-mobile-proto/MVI_3140.MOV");
+            MediaController mediaController = new MediaController(this.getActivity());
+            mediaController.setAnchorView(clueVideo);
+            clueVideo.setMediaController(mediaController);
+            clueVideo.setVideoURI(uri);
+            clueVideo.start();
+        } catch (Exception err) {
+            Log.e("Error: ", err.toString());
+        }
+
+        //***************************** change later
+        //new S3video().execute();
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
