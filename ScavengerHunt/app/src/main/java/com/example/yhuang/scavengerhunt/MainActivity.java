@@ -5,22 +5,41 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
+import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
+import com.example.yhuang.scavengerhunt.Database.ClueRow;
 import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
 import com.example.yhuang.scavengerhunt.Fragments.ImageUpload;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
+    public static Map<Integer,ClueRow.Row> locationMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ClueDBConnection clueLocations = new ClueDBConnection(this);
+        clueLocations.getLocations(new CallbackInterface() {
+            @Override
+            public void resultsCallback(Map<Integer, ClueRow.Row> locationArray) {
+                locationMap = locationArray;
+                /*
+                //Access each value using the following format
+                for (Map.Entry<Integer, ClueRow.Row> entry : locationMap.entrySet()) {
+                    Integer key = entry.getKey();
+                    ClueRow.Row row  = entry.getValue();
+                }*/
+            }
+        });
         changeToClue();
-
     }
 
     @Override
