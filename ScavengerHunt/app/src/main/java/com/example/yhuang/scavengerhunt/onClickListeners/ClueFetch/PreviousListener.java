@@ -21,18 +21,24 @@ public class PreviousListener implements View.OnClickListener {
     @Override public void onClick(View v) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
         alertDialogBuilder.setMessage(R.string.clue_switch_message);
+
+        //when a positive button is chosen, go to the next clue
         alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //prev()
             }
         });
+
+        //when a negative button is chosen, go back and do nothing
         alertDialogBuilder.setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //nothing
             }
         });
+
+        //show the alert
         alertDialogBuilder.show();
     }
 }
