@@ -2,17 +2,30 @@ package com.example.yhuang.scavengerhunt;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+    public static ArrayList<String> locationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /*ClueDBConnection clueLocations = new ClueDBConnection(this);
+        clueLocations.getLocations(new CallbackInterface() {
+            @Override
+            public void resultsCallback(ArrayList<String> locationArray) {
+                locationList = locationArray;
+                Log.d("Location Latitudes",locationList.toString());
+            }
+        });*/
     }
 
     @Override

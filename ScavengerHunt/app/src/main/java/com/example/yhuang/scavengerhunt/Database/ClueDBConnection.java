@@ -1,74 +1,66 @@
 package com.example.yhuang.scavengerhunt.Database;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import javax.security.auth.callback.Callback;
+
 /**
  * Created by siyer on 10/6/2015.
  */
-import java.sql.*; //For DB Connection
 
 public class ClueDBConnection {
-    private static final String URL = "jdbc:mysql://45.55.65.113/mobproto";
-    private static final String USER = "student";
-    private static final String PASS = "MobProto";
+        RequestQueue searchqueue;
+        private final static String url = "http://45.55.65.113/scavengerhunt";
 
-    public static void main(String[] argv) {
-        try {
-            getDataFromTable();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        public ClueDBConnection(Context context) {
+            //Request queue for search
+            searchqueue = Volley.newRequestQueue(context);
         }
-    }
 
-    public static void getDataFromTable() throws SQLException {
-        Connection dbConnection = null;
-        PreparedStatement preparedStatement = null;
+        public void getLocations(final CallbackInterface callback) {
+            final ArrayList<String> locationList = new ArrayList<String>();
 
-        String selectSQL = "SELECT VIDEO_ID FROM SCAVENGER_INFO WHERE VIDEO_ID = ?";
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    new JSONObject(),
+                    new Response.Listener<JSONObject>(){
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            String item = "items";
+                            try {
+                                JSONArray urlJson = response.getJSONArray(item);
+                                for(int i = 0; i < response.length(); i++){
+                                    locationList.add(urlJson.getJSONObject(i).getString("link"));
+                                }
+                                callback.resultsCallback(locationList);
+                            } catch (org.json.JSONException e) {
+                                e.printStackTrace();
+                            }
 
-        try {
-            dbConnection = getConnection();
-            preparedStatement = dbConnection.prepareStatement(selectSQL);
-            preparedStatement.setInt(1, 1001);
-
-            ResultSet rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-                String videoid = rs.getString("VIDEO_ID");
-
-                System.out.println("videoid : " + videoid);
-
-            }
-
-        } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
-
-        } finally {
-
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-
-            if (dbConnection != null) {
-                dbConnection.close();
-            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Error", error.getMessage());
+                        }
+                    }
+            );
+            searchqueue.add(request);
 
         }
     }
-
-    public static Connection getConnection() {
-        Connection dbConnection = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error: unable to load driver class!");
-            System.exit(1);
-        }
-
-        try {
-            dbConnection = DriverManager.getConnection(URL, USER, PASS);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return dbConnection;
-    }
-}
