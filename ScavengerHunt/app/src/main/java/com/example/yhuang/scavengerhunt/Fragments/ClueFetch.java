@@ -5,20 +5,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.R;
+import com.example.yhuang.scavengerhunt.Utils.VideoPlayer;
 
 
 public class ClueFetch extends Fragment {
@@ -29,11 +27,11 @@ public class ClueFetch extends Fragment {
     ImageButton prev;
     ImageButton next;
     ImageButton camera;
+    ImageButton video;
     GpsDetection gpsInfo;
     Boolean getSpot;
     Context context;
     PackageManager packageManager;
-    Uri uri;
 
     public ClueFetch() {
         // Required empty public constructor
@@ -51,27 +49,24 @@ public class ClueFetch extends Fragment {
         camera = (ImageButton) rootView.findViewById(R.id.camera); //camera button
         prev = (ImageButton) rootView.findViewById(R.id.prev); //travel to the previous clue
         next = (ImageButton) rootView.findViewById(R.id.next); //skip to the next clue
+        video = (ImageButton) rootView.findViewById(R.id.video); //play the video
 
         gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
         getSpot = true; //indicates whether does the user get the spot or not.
         context = getActivity(); //get the context
         packageManager = context.getPackageManager(); // get the Package Manager
 
-        //temporary use
-        //***************************** change later
-        try {
-            uri = Uri.parse("https://s3.amazonaws.com/olin-mobile-proto/MVI_3140.MOV");
-            MediaController mediaController = new MediaController(this.getActivity());
-            mediaController.setAnchorView(clueVideo);
-            clueVideo.setMediaController(mediaController);
-            clueVideo.setVideoURI(uri);
-            clueVideo.start();
-        } catch (Exception err) {
-            Log.e("Error: ", err.toString());
-        }
+        //hide the video
+        clueVideo.setVisibility(View.INVISIBLE);
 
-        //***************************** change later
-        //new S3video().execute();
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                video.setVisibility(View.INVISIBLE);
+                clueVideo.setVisibility(View.VISIBLE);
+                VideoPlayer.playVideo("MVI_3140.3gp", clueVideo, getActivity());
+            }
+        });
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
