@@ -12,9 +12,6 @@ import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
 import com.example.yhuang.scavengerhunt.R;
 
-/**
- * Created by yhuang on 10/19/2015.
- */
 public class CameraListener implements View.OnClickListener {
 
     private GpsDetection m_gpsInfo;

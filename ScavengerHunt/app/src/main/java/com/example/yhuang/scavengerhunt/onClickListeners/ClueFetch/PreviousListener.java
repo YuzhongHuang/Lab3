@@ -4,12 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
-
 import com.example.yhuang.scavengerhunt.R;
 
-/**
- * Created by yhuang on 10/19/2015.
- */
 public class PreviousListener implements View.OnClickListener {
 
     private Activity m_activity;

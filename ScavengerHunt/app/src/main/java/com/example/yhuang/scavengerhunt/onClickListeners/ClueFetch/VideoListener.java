@@ -4,12 +4,8 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.VideoView;
-
 import com.example.yhuang.scavengerhunt.Utils.VideoPlayer;
 
-/**
- * Created by yhuang on 10/19/2015.
- */
 public class VideoListener implements View.OnClickListener {
 
     private ImageButton m_video;
