@@ -22,28 +22,19 @@ import com.example.yhuang.scavengerhunt.R;
 
 public class GpsDetection extends Service implements LocationListener {
 
+    protected LocationManager locationManager; // Declaring a Location Manager
+
     private final Context mContext;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // The minimum distance to change Updates in meters is 5 meters
+    private static final long MIN_TIME_BW_UPDATES = 30000; // The minimum time between updates in milliseconds is half minute
 
-    boolean isGPSEnabled = false;
-
-    // flag for network status
-    boolean isNetworkEnabled = false;
-
-    // flag for GPS status
-    boolean canGetLocation = false;
+    boolean isGPSEnabled = false; //flag for GPS enable
+    boolean isNetworkEnabled = false; // flag for network status
+    boolean canGetLocation = false; // flag for GPS status
 
     Location location; // location
     double latitude; // latitude
     double longitude; // longitude
-
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 5 meters
-
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 30000; // half minute
-
-    // Declaring a Location Manager
-    protected LocationManager locationManager;
 
     public GpsDetection(Context context) {
         this.mContext = context;
