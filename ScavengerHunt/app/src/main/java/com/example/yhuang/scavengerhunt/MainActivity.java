@@ -1,16 +1,11 @@
 package com.example.yhuang.scavengerhunt;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
-import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
-import com.example.yhuang.scavengerhunt.Fragments.ImageUpload;
+import com.example.yhuang.scavengerhunt.Utils.FragmentTransition;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        changeToClue();
-
+        FragmentTransition fragmentTrans = new FragmentTransition();
+        fragmentTrans.changeToClue();
     }
 
     @Override
@@ -43,29 +38,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    //Change to a clue fragment
-    public void changeToClue() {
-        ClueFetch clue_fragment = new ClueFetch();
-        transitionToFragment(clue_fragment);
-    }
-
-    /*Change to a GPS fragment
-    public void changeToGps() {
-        GpsDetection gps_fragment = new GpsDetection();
-        transitionToFragment(gps_fragment);
-    }*/
-
-    public void changeToImage() {
-        ImageUpload image_fragment = new ImageUpload();
-        transitionToFragment(image_fragment);
-    }
-
-    public void transitionToFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.fragment_activity, fragment);
-        transaction.commit();
     }
 }
