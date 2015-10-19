@@ -16,6 +16,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.R;
+import com.example.yhuang.scavengerhunt.Utils.VideoPlayer;
+
 
 public class ClueFetch extends Fragment {
 
@@ -25,6 +27,7 @@ public class ClueFetch extends Fragment {
     ImageButton prev;
     ImageButton next;
     ImageButton camera;
+    ImageButton video;
     GpsDetection gpsInfo;
     Boolean getSpot;
     Context context;
@@ -46,11 +49,24 @@ public class ClueFetch extends Fragment {
         camera = (ImageButton) rootView.findViewById(R.id.camera); //camera button
         prev = (ImageButton) rootView.findViewById(R.id.prev); //travel to the previous clue
         next = (ImageButton) rootView.findViewById(R.id.next); //skip to the next clue
+        video = (ImageButton) rootView.findViewById(R.id.video); //play the video
 
         gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
         getSpot = true; //indicates whether does the user get the spot or not.
         context = getActivity(); //get the context
         packageManager = context.getPackageManager(); // get the Package Manager
+
+        //hide the video
+        clueVideo.setVisibility(View.INVISIBLE);
+
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                video.setVisibility(View.INVISIBLE);
+                clueVideo.setVisibility(View.VISIBLE);
+                VideoPlayer.playVideo("MVI_3140.3gp", clueVideo, getActivity());
+            }
+        });
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
