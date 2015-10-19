@@ -28,8 +28,7 @@ public class CameraListener implements View.OnClickListener {
     }
 
     @Override public void onClick(View v) {
-        //update user's GPS status
-        Boolean m_getSpot = m_gpsInfo.canGetLocation();
+        Boolean m_getSpot = m_gpsInfo.canGetLocation(); //update user's GPS status
 
         //Using PackageManager to check if an Android device has a camera from within a fragment
         if(!m_packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
@@ -38,22 +37,16 @@ public class CameraListener implements View.OnClickListener {
             return;
         }
 
-        //Check if the user have reached the spot or not
+        //if m_getSpot is true, open the camera if not, ask if the user want some hints
         if (m_getSpot) {
-            //double latitude = gpsInfo.latitudeInfo();
-            //double longitude = gpsInfo.longitudeInfo();
-
-            //Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-
             //send intent to CameraActivity
             Intent intent = new Intent(m_activity, CameraActivity.class);
             m_activity.startActivity(intent);
         } else {
-            //Shows that user still doesn't get the spot yet
-            //and ask them whether they want hint or not
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
             alertDialogBuilder.setMessage(R.string.hint_message);
 
+            //when a positive button is hit, give the hint
             alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -62,6 +55,7 @@ public class CameraListener implements View.OnClickListener {
                 }
             });
 
+            //when a negative button is hit, do nothing and go back
             alertDialogBuilder.setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -69,6 +63,7 @@ public class CameraListener implements View.OnClickListener {
                 }
             });
 
+            //show the alert
             alertDialogBuilder.show();
         }
     }
