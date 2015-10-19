@@ -1,6 +1,5 @@
 package com.example.yhuang.scavengerhunt.Database;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 /**

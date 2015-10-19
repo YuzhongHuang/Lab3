@@ -51,8 +51,8 @@
         android:id="@+id/videoClue"
         android:layout_width="match_parent"
         android:layout_height="249dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp" />
 
     <!-- Change the button into a camera icon -->
     <ImageButton
@@ -65,21 +65,30 @@
 
     <ImageButton
         android:id="@+id/prev"
-        android:layout_marginTop="30dp"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_gravity="left|top"
+        android:layout_gravity="start|top"
+        android:layout_marginTop="30dp"
         android:padding="0dp"
         android:src="@drawable/prev" />
 
     <ImageButton
         android:id="@+id/next"
-        android:layout_marginTop="30dp"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_gravity="right|top"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="30dp"
         android:padding="0dp"
         android:src="@drawable/next" />
+
+    <ImageButton
+        android:id="@+id/video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:padding="0dp"
+        android:src="@drawable/video" />
 
 
 </FrameLayout>
