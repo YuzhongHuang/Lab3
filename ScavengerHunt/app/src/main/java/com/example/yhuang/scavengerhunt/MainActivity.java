@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
@@ -16,6 +15,7 @@ import com.example.yhuang.scavengerhunt.Database.ClueRow;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
     public static Map<Integer,ClueRow.Row> locationMap;
     public FragmentManager fm = (FragmentManager) getSupportFragmentManager();
 
