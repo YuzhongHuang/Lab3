@@ -1,11 +1,15 @@
 package com.example.yhuang.scavengerhunt;
 
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.yhuang.scavengerhunt.Utils.FragmentTransition;
+
+import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Database.ClueRow;
@@ -13,6 +17,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     public static Map<Integer,ClueRow.Row> locationMap;
+    public FragmentManager fm = (FragmentManager) getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //begin fragment transaction to ClueFetch
-        FragmentTransition fragmentTrans = new FragmentTransition();
-        fragmentTrans.changeToClue();
+        changeToClue();
 
         //Setup database connection
         ClueDBConnection clueLocations = new ClueDBConnection(this);
@@ -61,5 +65,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void changeToClue() {
+        ClueFetch clue_fragment = new ClueFetch();
+        transitionToFragment(clue_fragment);
+    }
+
+    private void transitionToFragment(Fragment fragment) {
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_activity, fragment);
+        transaction.commit();
     }
 }
