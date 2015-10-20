@@ -103,12 +103,12 @@ public class GpsDetection extends Service implements LocationListener {
     /**
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
-     */
+     *
     public void stopUsingGPS() {
         if (locationManager != null) {
             locationManager.removeUpdates(GpsDetection.this);
         }
-    }
+    }*/
 
     public double latitudeInfo() {
         if (location != null) {
