@@ -7,9 +7,6 @@ import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.MainActivity;
 import com.example.yhuang.scavengerhunt.R;
 
-/**
- * Created by yhuang on 10/19/2015.
- */
 public class FragmentTransition extends MainActivity {
 
     private  FragmentManager fm = (FragmentManager) getSupportFragmentManager();

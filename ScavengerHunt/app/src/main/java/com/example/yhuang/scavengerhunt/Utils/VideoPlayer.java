@@ -6,9 +6,6 @@ import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-/**
- * Created by yhuang on 10/18/2015.
- */
 public class VideoPlayer {
 
     public static void playVideo (String videoName, VideoView clueVideo, Activity activity) {
