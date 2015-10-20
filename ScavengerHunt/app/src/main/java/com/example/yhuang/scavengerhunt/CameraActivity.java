@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,28 +21,12 @@ public class CameraActivity extends AppCompatActivity {
         onLaunchCamera(this.findViewById(android.R.id.content).getRootView());
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_camera, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    /**
+     * When "onLaunchCamera" is called, an implicit
+     * intent will be sent out to camera. Data containing
+     * image will be returned to "onActivityResult" when
+     * the camera is done
+     */
     public void onLaunchCamera(View view) {
         // create an implicit Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -54,10 +36,12 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     @Override
-    /*
-     * "onActivityResult" will be called when the camera intent returns data
-     * the requestCode and resultCode will be sent back for status checking
-     * and the data is stored in "data"
+
+    /**
+     * "onActivityResult" will be called when the camera
+     * intent returns data the requestCode and resultCode
+     * will be sent back for status checking and
+     * the data is stored in "data"
     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode != RESULT_CANCELED && resultCode == RESULT_OK) {
@@ -66,8 +50,8 @@ public class CameraActivity extends AppCompatActivity {
 
                     //uploadImageToDatabase(Bitmap takenImage);
 
-                    //ImageView ivPreview = (ImageView) findViewById(R.id.imageView_test);
-                    //ivPreview.setImageBitmap(takenImage);
+                    ImageView ivPreview = (ImageView) findViewById(R.id.imageView_test);
+                    ivPreview.setImageBitmap(takenImage);
         } else {
             Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
         }

@@ -1,32 +1,36 @@
 package com.example.yhuang.scavengerhunt;
 
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Database.ClueRow;
-import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
-import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
-import com.example.yhuang.scavengerhunt.Fragments.ImageUpload;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     public static Map<Integer,ClueRow.Row> locationMap;
+    public FragmentManager fm = (FragmentManager) getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //begin fragment transaction to ClueFetch
+        changeToClue();
+
+        //Setup database connection
         ClueDBConnection clueLocations = new ClueDBConnection(this);
+
+        // this callback function needs to be moved out to another class
         clueLocations.getLocations(new CallbackInterface() {
             @Override
             public void resultsCallback(Map<Integer, ClueRow.Row> locationArray) {
@@ -39,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 }*/
             }
         });
-        changeToClue();
     }
 
     @Override
@@ -64,25 +67,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Change to a clue fragment
+    //change to ClueFetch fragment
     public void changeToClue() {
         ClueFetch clue_fragment = new ClueFetch();
         transitionToFragment(clue_fragment);
     }
 
-    /*Change to a GPS fragment
-    public void changeToGps() {
-        GpsDetection gps_fragment = new GpsDetection();
-        transitionToFragment(gps_fragment);
-    }*/
-
-    public void changeToImage() {
-        ImageUpload image_fragment = new ImageUpload();
-        transitionToFragment(image_fragment);
-    }
-
-    public void transitionToFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
+    //general fragment transition method
+    private void transitionToFragment(Fragment fragment) {
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fragment_activity, fragment);
         transaction.commit();
