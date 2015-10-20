@@ -67,11 +67,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //change to ClueFetch fragment
     public void changeToClue() {
         ClueFetch clue_fragment = new ClueFetch();
         transitionToFragment(clue_fragment);
     }
 
+    //general fragment transition method
     private void transitionToFragment(Fragment fragment) {
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fragment_activity, fragment);
