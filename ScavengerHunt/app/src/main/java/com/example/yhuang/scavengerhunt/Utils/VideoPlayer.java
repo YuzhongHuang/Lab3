@@ -24,5 +24,5 @@ public class VideoPlayer {
         } catch (Exception err) {
             Log.e("Error: ", err.toString());
         }
-    };
+    }
 }
