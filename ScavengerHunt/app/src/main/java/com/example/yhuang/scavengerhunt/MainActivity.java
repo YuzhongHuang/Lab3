@@ -20,12 +20,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    public static Map<Integer,ClueRow.Row> locationMap;
+    public static Map<Integer,ClueRow.Row> locationMap; //Map to access all info about a clue
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ClueDBConnection clueLocations = new ClueDBConnection(this);
         clueLocations.getLocations(new CallbackInterface() {
             @Override
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Change to a clue fragment
+    //Change to a clue fragment using transaction
     public void changeToClue() {
         ClueFetch clue_fragment = new ClueFetch();
         transitionToFragment(clue_fragment);

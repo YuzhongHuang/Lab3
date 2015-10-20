@@ -14,29 +14,28 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
-import javax.security.auth.callback.Callback;
-
 /**
- * Created by siyer on 10/6/2015.
+ * This class establishes connection to the server,
+ * HTTP request and get JSON information using Volley.
+ * Maps each row to an id for easy access
  */
 
 public class ClueDBConnection {
-    RequestQueue searchqueue;
-    private final static String url = "http://45.55.65.113/scavengerhunt";
+    RequestQueue searchQueue;
+    private final static String url = "http://45.55.65.113/scavengerhunt"; //url for JSON data
 
     public ClueDBConnection(Context context) {
         //Request queue for search
-        searchqueue = Volley.newRequestQueue(context);
+        searchQueue = Volley.newRequestQueue(context);
     }
 
     public void getLocations(final CallbackInterface callback) {
-        final ArrayList<Double> latitudeList = new ArrayList<Double>();
-        final ArrayList<Double> longitudeList = new ArrayList<Double>();
-        final ArrayList<Integer> idList = new ArrayList<Integer>();
-        final ArrayList<String> s3vid = new ArrayList<String>();
+        final ArrayList<Double> latitudeList = new ArrayList<>(); //Latitude info in list form
+        final ArrayList<Double> longitudeList = new ArrayList<>() ;//Longitude info in list form
+        final ArrayList<Integer> idList = new ArrayList<>(); //Place number
+        final ArrayList<String> s3vid = new ArrayList<>(); //Amazon S3 clue videos id
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -45,21 +44,22 @@ public class ClueDBConnection {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
-                        String item = "path";
+                        //AsyncTask for getting JSON
                         try {
-                            JSONArray urlJson = response.getJSONArray(item);
+                            //Filtering and looping to get/sort JSON
+                            JSONArray urlJson = response.getJSONArray("path");
                             for(int i = 0; i < urlJson.length(); i++){
                                     latitudeList.add(urlJson.getJSONObject(i).getDouble("latitude"));
                                     longitudeList.add(urlJson.getJSONObject(i).getDouble("longitude"));
                                     idList.add(urlJson.getJSONObject(i).getInt("id"));
                                     s3vid.add(urlJson.getJSONObject(i).getString("s3id"));
                             }
+                            //Map  of the index to the Row object
                             Map<Integer, ClueRow.Row> map = ClueRow.Map(idList,latitudeList,longitudeList,s3vid);
                             callback.resultsCallback(map);
                         } catch (org.json.JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -69,7 +69,6 @@ public class ClueDBConnection {
                     }
                 }
         );
-        searchqueue.add(request);
-
+        searchQueue.add(request);
     }
 }
