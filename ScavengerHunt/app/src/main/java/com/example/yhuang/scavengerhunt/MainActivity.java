@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ClueDBConnection clueLocations = new ClueDBConnection(this); // setup database connection
 
         // this callback function needs to be moved out to another class

@@ -11,7 +11,6 @@ import com.example.yhuang.scavengerhunt.R;
  * challenge if the user intends to.
  *
  * Pops up an alertDialog to warn user
- * about switching challenges
  */
 
 public class NextListener implements View.OnClickListener{
