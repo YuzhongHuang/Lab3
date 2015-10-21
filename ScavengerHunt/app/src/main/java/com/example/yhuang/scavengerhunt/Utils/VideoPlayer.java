@@ -9,7 +9,7 @@ import android.widget.VideoView;
 /**
  * VideoPlayer load the video according
  * to the provided uri, and display it with
- * MediaController 
+ * MediaController
  */
 
 public class VideoPlayer {
