@@ -1,6 +1,5 @@
 package com.example.yhuang.scavengerhunt;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +13,17 @@ import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Database.ClueRow;
 import java.util.Map;
 
+/**
+ * In MainActivity, we set up the online
+ * database connection, fragment transaction
+ * manager, as well as information returned
+ * from database.
+ *
+ * As the MainActivity finished initialization,
+ * it uses fragment transaction manager to
+ * switch to StartPage fragment
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fm = (FragmentManager) getSupportFragmentManager();
@@ -24,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Setup database connection
-        ClueDBConnection clueLocations = new ClueDBConnection(this);
+
+        ClueDBConnection clueLocations = new ClueDBConnection(this); // setup database connection
 
         // this callback function needs to be moved out to another class
         clueLocations.getLocations(new CallbackInterface() {
@@ -41,30 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //begin fragment transaction to ClueFetch
-        changeToClue();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        changeToClue(); // should first change to the start page fragment
     }
 
     //change to ClueFetch fragment

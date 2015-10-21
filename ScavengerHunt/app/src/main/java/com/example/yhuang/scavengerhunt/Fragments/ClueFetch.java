@@ -1,5 +1,6 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,9 +15,19 @@ import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.CameraListene
 import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.NextListener;
 import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.PreviousListener;
 import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.VideoListener;
-
 import butterknife.Bind;
-import butterknife.OnClick;
+
+
+/**
+ * In ClueFetch fragment, we first use
+ * butter knife to connect view with our
+ * model, and then set up GPS
+ *
+ *
+ * As the MainActivity finished initialization,
+ * it uses fragment transaction manager to
+ * switch to StartPage fragment
+ */
 
 public class ClueFetch extends Fragment {
 
@@ -35,16 +46,16 @@ public class ClueFetch extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
 
         GpsDetection gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
-        Context context = getActivity(); //get the context
-        PackageManager packageManager = context.getPackageManager(); // get the Package Manager
+        Activity activity = getActivity(); //get the context
+        PackageManager packageManager = activity.getPackageManager(); // get the Package Manager
 
 
         clueVideo.setVisibility(View.INVISIBLE); //hide the video initially
 
-        video.setOnClickListener(new VideoListener(video, clueVideo, getActivity()));
-        camera.setOnClickListener(new CameraListener(gpsInfo, getActivity(), packageManager));
-        prev.setOnClickListener(new PreviousListener(getActivity()));
-        next.setOnClickListener(new NextListener(getActivity()));
+        video.setOnClickListener(new VideoListener(video, clueVideo, activity));
+        camera.setOnClickListener(new CameraListener(gpsInfo, activity, packageManager));
+        prev.setOnClickListener(new PreviousListener(activity));
+        next.setOnClickListener(new NextListener(activity));
         return rootView;
     }
 }
