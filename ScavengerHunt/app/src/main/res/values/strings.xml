@@ -5,7 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="new_game">New Game</string>
     <string name="resume_game">Resume</string>
-    <string name="no_picture">Picture wasn't taken!</string>
+    <string name="no_picture">Picture was not taken</string>
+    <string name="total_clue">6</string>
 
     <!-- ClueFetch Fragment -->
     <string name="clue">Clue</string>

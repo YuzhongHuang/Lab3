@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         clueLocations.getLocations(new CallbackInterface() {
             @Override
             public void resultsCallback(Map<Integer, ClueRow.Row> locationArray) {
+                // need to add an error handler for network issue
                 locationMap = locationArray;
                 /*
                 //Access each value using the following format
