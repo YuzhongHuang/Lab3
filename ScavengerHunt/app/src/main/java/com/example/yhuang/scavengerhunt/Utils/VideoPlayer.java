@@ -6,6 +6,12 @@ import android.util.Log;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+/**
+ * VideoPlayer load the video according
+ * to the provided uri, and display it with
+ * MediaController 
+ */
+
 public class VideoPlayer {
 
     public static void playVideo (String videoName, VideoView clueVideo, Activity activity) {
