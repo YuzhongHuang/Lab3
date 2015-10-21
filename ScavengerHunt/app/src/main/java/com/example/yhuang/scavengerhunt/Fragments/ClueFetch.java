@@ -21,18 +21,19 @@ import butterknife.Bind;
 /**
  * In ClueFetch fragment, we first use
  * butter knife to connect view with our
- * model, and then set up GPS
+ * model, set up GPS for location checking,
+ * and a package manager to check whether
+ * the camera is available.
  *
- *
- * As the MainActivity finished initialization,
- * it uses fragment transaction manager to
- * switch to StartPage fragment
+ * Four onClickListeners are setup here
+ * and get further implemented in the
+ * onClickListeners/ClueFetch folder
  */
 
 public class ClueFetch extends Fragment {
 
-//    @Bind(R.id.currentClue) TextView curClue;
-//    @Bind(R.id.totalClue) TextView totalClue;
+    //@Bind(R.id.currentClue) TextView curClue;
+    //@Bind(R.id.totalClue) TextView totalClue;
     @Bind(R.id.videoClue) VideoView clueVideo;
     @Bind(R.id.camera) ImageButton camera;
     @Bind(R.id.prev) ImageButton prev;
@@ -45,13 +46,13 @@ public class ClueFetch extends Fragment {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
 
+        Activity activity = getActivity(); //get the activity
         GpsDetection gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
-        Activity activity = getActivity(); //get the context
         PackageManager packageManager = activity.getPackageManager(); // get the Package Manager
 
+        clueVideo.setVisibility(View.INVISIBLE); //hide the video initially and reveal it when a play button is hit
 
-        clueVideo.setVisibility(View.INVISIBLE); //hide the video initially
-
+        // set up onClickListeners
         video.setOnClickListener(new VideoListener(video, clueVideo, activity));
         camera.setOnClickListener(new CameraListener(gpsInfo, activity, packageManager));
         prev.setOnClickListener(new PreviousListener(activity));
