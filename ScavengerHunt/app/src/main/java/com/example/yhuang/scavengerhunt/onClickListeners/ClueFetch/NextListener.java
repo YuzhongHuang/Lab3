@@ -6,6 +6,14 @@ import android.content.DialogInterface;
 import android.view.View;
 import com.example.yhuang.scavengerhunt.R;
 
+/**
+ * NextListener travels to the next
+ * challenge if the user intends to.
+ *
+ * Pops up an alertDialog to warn user
+ * about switching challenges
+ */
+
 public class NextListener implements View.OnClickListener{
 
     private Activity m_activity;
