@@ -12,6 +12,22 @@ import com.example.yhuang.scavengerhunt.CameraActivity;
 import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
 import com.example.yhuang.scavengerhunt.R;
 
+/**
+ * When the camera button is hit, the
+ * CameraListener should perform the following
+ * tasks:
+ *
+ * 1. check whether user has reached the location
+ *
+ * 2. if true, check with the package manager
+ * to see if camera device is available. If
+ * true, call the camera Activity.
+ *
+ * 3.if the user has not get the location,
+ * pops up an alertDialog to inform user
+ * and provides hint if necessary.
+ */
+
 public class CameraListener implements View.OnClickListener {
 
     private GpsDetection m_gpsInfo;

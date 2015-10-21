@@ -6,6 +6,13 @@ import android.widget.ImageButton;
 import android.widget.VideoView;
 import com.example.yhuang.scavengerhunt.Utils.VideoPlayer;
 
+/**
+ * When the video button is clicked,
+ * video listener will change the visibility
+ * of video button and the video view,
+ * and load the media to play video
+ */
+
 public class VideoListener implements View.OnClickListener {
 
     private ImageButton m_video;
