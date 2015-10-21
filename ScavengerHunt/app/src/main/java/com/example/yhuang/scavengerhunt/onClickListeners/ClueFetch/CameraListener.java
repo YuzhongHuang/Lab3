@@ -29,6 +29,7 @@ public class CameraListener implements View.OnClickListener {
 
         //Using PackageManager to check if an Android device has a camera from within a fragment
         if(!m_packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            //print into string.xml
             Toast.makeText(m_activity, "This device does not have a camera.", Toast.LENGTH_SHORT)
                     .show();
             return;

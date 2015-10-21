@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    public FragmentManager fm = (FragmentManager) getSupportFragmentManager();
+    private FragmentManager fm = (FragmentManager) getSupportFragmentManager();
     public static Map<Integer,ClueRow.Row> locationMap; //Map to access all info about a clue
 
     @Override
