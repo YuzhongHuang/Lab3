@@ -1,7 +1,7 @@
 package com.example.yhuang.scavengerhunt.Database;
 
 /**
- * Created by yhuang on 10/6/2015.
+ * Will be used possibly for database
  */
 public class ClueContract {
 }

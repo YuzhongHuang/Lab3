@@ -16,16 +16,13 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static Map<Integer,ClueRow.Row> locationMap;
-    public FragmentManager fm = (FragmentManager) getSupportFragmentManager();
+    private FragmentManager fm = (FragmentManager) getSupportFragmentManager();
+    public static Map<Integer,ClueRow.Row> locationMap; //Map to access all info about a clue
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //begin fragment transaction to ClueFetch
-        changeToClue();
 
         //Setup database connection
         ClueDBConnection clueLocations = new ClueDBConnection(this);
@@ -43,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 }*/
             }
         });
+
+        //begin fragment transaction to ClueFetch
+        changeToClue();
     }
 
     @Override
