@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.example.yhuang.scavengerhunt.MainActivity;
 import com.example.yhuang.scavengerhunt.R;
 import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.CameraListener;
@@ -20,7 +19,6 @@ import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.PreviousListe
 import com.example.yhuang.scavengerhunt.onClickListeners.ClueFetch.VideoListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
 
 /**
  * In ClueFetch fragment, we first use
@@ -36,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class ClueFetch extends Fragment {
 
-    private int curClueNum;
+    public static int curClueNum = 1;
 
     @Bind(R.id.currentClue) TextView curClue;
     @Bind(R.id.videoClue) VideoView clueVideo;
@@ -56,15 +54,14 @@ public class ClueFetch extends Fragment {
         GpsDetection gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
         PackageManager packageManager = activity.getPackageManager(); // get the Package Manager
 
-        curClueNum = 1;
         curClue.setText(Integer.toString(curClueNum));
         clueVideo.setVisibility(View.INVISIBLE); //hide the video initially and reveal it when a play button is hit
 
         // set up onClickListeners
         video.setOnClickListener(new VideoListener(curClueNum, video, clueVideo, activity));
         camera.setOnClickListener(new CameraListener(gpsInfo, activity, packageManager));
-        prev.setOnClickListener(new PreviousListener(activity));
-        next.setOnClickListener(new NextListener(activity));
+        prev.setOnClickListener(new PreviousListener(activity, this));
+        next.setOnClickListener(new NextListener(activity, this));
         return rootView;
     }
 
@@ -73,14 +70,16 @@ public class ClueFetch extends Fragment {
             Toast.makeText(getActivity(), R.string.last_clue, Toast.LENGTH_SHORT).show();
         } else {
             curClueNum++;
+            ((MainActivity) getActivity()).changeToClue();
         }
     }
 
     public void prevClue() {
-        if (curClueNum >= 6) {
+        if (curClueNum <= 1) {
             Toast.makeText(getActivity(), R.string.first_clue, Toast.LENGTH_SHORT).show();
         } else {
             curClueNum--;
+            ((MainActivity) getActivity()).changeToClue();
         }
     }
 }
