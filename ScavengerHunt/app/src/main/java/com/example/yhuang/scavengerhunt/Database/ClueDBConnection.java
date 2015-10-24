@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,11 +25,16 @@ import java.util.Map;
 
 public class ClueDBConnection {
     RequestQueue searchQueue;
+    RequestQueue postQueue;
+    RequestQueue locationQueue;
     private final static String url = "http://45.55.65.113/scavengerhunt"; //url for JSON data
+    private final static String appUrl = "http://45.55.65.113/userdata/rabbit"; //url for posting and getting all the data
 
     public ClueDBConnection(Context context) {
         //Request queue for search
         searchQueue = Volley.newRequestQueue(context);
+        postQueue = Volley.newRequestQueue(context);
+        locationQueue = Volley.newRequestQueue(context);
     }
 
     public void getLocations(final CallbackInterface callback) {
@@ -71,4 +77,67 @@ public class ClueDBConnection {
         );
         searchQueue.add(request);
     }
+
+    public void postIds(String imageKey, String imageLocation) {
+        JSONObject bodyInfo = new JSONObject();
+        try {
+            bodyInfo.put("imageKey", imageKey);
+            bodyInfo.put("imageLocation", imageLocation);
+        }catch (Exception e) {
+            Log.e("JSON PUT", e.getMessage());
+        }
+
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                appUrl,
+                bodyInfo,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //continue;
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error", error.getMessage());
+                    }
+                }
+        );
+        postQueue.add(request);
+    }
+
+    public void getIds(final LocationInterface location, final int imageLocation) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                appUrl,
+                new JSONObject(),
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //Filtering and looping to get/sort JSON
+                            JSONArray urlJson = response.getJSONArray("data");
+                            for (int i=0; i<urlJson.length(); i++) {
+                                if (urlJson.getJSONObject(i).getInt("imageKey") == imageLocation){
+                                    String locationImage = urlJson.getJSONObject(i).getString("imageLocation");
+                                    location.locationCallback(locationImage);
+                                }
+                            }
+                        } catch (org.json.JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error", error.getMessage());
+                    }
+                }
+        );
+        locationQueue.add(request);
+    }
+
 }

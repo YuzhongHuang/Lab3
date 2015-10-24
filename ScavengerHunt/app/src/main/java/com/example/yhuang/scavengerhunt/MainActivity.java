@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.yhuang.scavengerhunt.Database.LocationInterface;
 import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
@@ -41,7 +43,16 @@ public class MainActivity extends AppCompatActivity {
                 }*/
             }
         });
-
+        //Aceess the location imageKey
+        /*
+        clueLocations.getIds(new LocationInterface() {
+            @Override
+            public void locationCallback(String imageLocation) {
+                //String imageUUID = imageLocation;
+                System.out.println(imageLocation);
+            }
+        }, 10);
+        */
         //begin fragment transaction to ClueFetch
         changeToClue();
     }
