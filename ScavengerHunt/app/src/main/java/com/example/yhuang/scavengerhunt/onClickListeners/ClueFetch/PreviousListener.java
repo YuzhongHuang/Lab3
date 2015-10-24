@@ -4,14 +4,25 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
+import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.R;
+
+/**
+ * PrevListener travels to the Previous
+ * challenge if the user intends to.
+ *
+ * Pops up an alertDialog to warn user
+ * about switching challenges
+ */
 
 public class PreviousListener implements View.OnClickListener {
 
     private Activity m_activity;
+    private ClueFetch m_clueFetch;
 
-    public PreviousListener (Activity activity) {
+    public PreviousListener (Activity activity, ClueFetch clueFetch) {
         m_activity = activity;
+        m_clueFetch = clueFetch;
     }
 
     @Override public void onClick(View v) {
@@ -22,7 +33,7 @@ public class PreviousListener implements View.OnClickListener {
         alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //prev()
+                m_clueFetch.prevClue();
             }
         });
 

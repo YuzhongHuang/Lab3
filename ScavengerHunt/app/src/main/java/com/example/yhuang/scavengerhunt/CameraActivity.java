@@ -53,7 +53,7 @@ public class CameraActivity extends AppCompatActivity {
                     ImageView ivPreview = (ImageView) findViewById(R.id.imageView_test);
                     ivPreview.setImageBitmap(takenImage);
         } else {
-            Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_picture, Toast.LENGTH_SHORT).show();
         }
     }
 
