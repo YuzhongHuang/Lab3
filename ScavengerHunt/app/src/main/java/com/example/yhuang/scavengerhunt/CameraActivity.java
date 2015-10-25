@@ -5,15 +5,20 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;   
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.yhuang.scavengerhunt.Utils.LocalUUID;
+import com.example.yhuang.scavengerhunt.Utils.S3;
+
 import java.io.File;
 import java.io.IOException;
 
 public class CameraActivity extends AppCompatActivity {
 
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+    private String uuid;
     private String mCurrentPhotoPath;
 
     @Override
@@ -63,6 +68,10 @@ public class CameraActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode != RESULT_CANCELED && resultCode == RESULT_OK) {
             Toast.makeText(this, mCurrentPhotoPath, Toast.LENGTH_LONG).show();
+            uuid = LocalUUID.getUUID(mCurrentPhotoPath);
+
+            new S3.UploadImage().execute(mCurrentPhotoPath, uuid);
+
         } else {
             Toast.makeText(this, R.string.no_picture, Toast.LENGTH_SHORT).show();
         }
