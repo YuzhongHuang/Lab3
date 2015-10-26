@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Utils.LocalUUID;
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +20,16 @@ public class CameraActivity extends AppCompatActivity {
 
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private String uuid;
+    private int curClueNum;
     private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        Intent mIntent = getIntent();
+        curClueNum = mIntent.getIntExtra("curClueNum", 0);
+
         onLaunchCamera(this.findViewById(android.R.id.content).getRootView());
     }
 
@@ -88,6 +93,7 @@ public class CameraActivity extends AppCompatActivity {
     public void Upload (String filename, String uuid) {
         AmazonS3Client s3Client = new AmazonS3Client(new BasicAWSCredentials("AKIAISEFKD6O3QSZGHUQ", "ETum1qfRaUFQ/ixydMBA+yBcUJLY5m8/JojEufNf"));
         TransferUtility transferUtility = new TransferUtility(s3Client,this);
+        ClueDBConnection clueDBConnection = new ClueDBConnection(this);
         File fileToUpload = new File(filename);
 
         transferUtility.upload(
@@ -95,6 +101,8 @@ public class CameraActivity extends AppCompatActivity {
                 uuid,    /* The key for the uploaded object */
                 fileToUpload        /* The file where the data to upload exists */
         );
+
+        clueDBConnection.postIds(uuid,Integer.toString(curClueNum));
     }
 
     /**
