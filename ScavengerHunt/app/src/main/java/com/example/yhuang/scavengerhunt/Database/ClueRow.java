@@ -18,10 +18,10 @@ public class ClueRow {
         public String s3video;
         public Row(Integer id, Double lat, Double lon, String s3video)
         {
-            this.id = id; System.out.println(id);
-            this.lat = lat; System.out.println(lat);
-            this.lon = lon; System.out.println(lon);
-            this.s3video = s3video; System.out.println(s3video);
+            this.id = id;
+            this.lat = lat;
+            this.lon = lon;
+            this.s3video = s3video;
         }
     }
 
