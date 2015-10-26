@@ -13,12 +13,16 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.util.Arrays;
+import java.util.List;
 
-import com.example.yhuang.scavengerhunt.R;
+/**
+ * When the Camera onClick listener is called, the distance between the
+ * clue location and the user location is calculated. If the distance is
+ * less than 40 meters, the boolean becomes true and allows it to take
+ * pictures. It also does calculation like direction (North, South, etc.)
+ * to give the users hint.
+ */
 
 public class GpsDetection extends Service implements LocationListener {
 
@@ -55,9 +59,8 @@ public class GpsDetection extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!isGPSEnabled && !isNetworkEnabled) {
-                // no network provider is enabled
+                showSettingsAlert();
             } else {
-                this.canGetLocation = true;
                 // First get location from Network Provider
                 if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(
@@ -100,10 +103,8 @@ public class GpsDetection extends Service implements LocationListener {
         return location;
     }
 
-    /**
-     * Stop using GPS listener
-     * Calling this function will stop using GPS in your app
-     *
+    /*
+    //Stop using GPS listener
     public void stopUsingGPS() {
         if (locationManager != null) {
             locationManager.removeUpdates(GpsDetection.this);
@@ -111,6 +112,7 @@ public class GpsDetection extends Service implements LocationListener {
     }*/
 
     public double latitudeInfo() {
+        //Gives the latitude of the user
         if (location != null) {
             latitude = location.getLatitude();
         }
@@ -118,16 +120,61 @@ public class GpsDetection extends Service implements LocationListener {
     }
 
     public double longitudeInfo() {
+        //Gives the longitude of the user
         if (location != null) {
             longitude = location.getLongitude();
         }
         return longitude;
     }
 
-    public boolean canGetLocation() {
+    public boolean canGetLocation(double lat1, double lon1, double lat2, double lon2) {
+        //Returns a boolean if the users are/aren't within a threshold (40 meters)
+        if (calculateDistance(lat1, lon1, lat2, lon2)<40){
+            Log.d("CalculateDistance",String.valueOf(calculateDistance(lat1, lon1, lat2, lon2)));
+            this.canGetLocation = Boolean.TRUE;
+        }
         return this.canGetLocation;
     }
 
+    public double calculateDistance(double lat1, double lon1, double lat2, double lon2){
+        //Returns the distance in meters
+
+        double R = 6378.137; // Radius of earth in KM
+
+        double dLat = Math.toRadians(lat2 - lat1); //Latitude Delta in Radians
+        double dLon = Math.toRadians(lon2 - lon1); //Longitude Delta in Radians
+        lat1 = Math.toRadians(lat1); //Latitude in radians
+        lat2 = Math.toRadians(lat2); //Longitude in radians
+
+        //Haversine formula for two points
+        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double d = R * c;
+
+        double distance = (d * 1000); //In meters
+
+        return Math.abs(distance);
+    }
+
+    public String calculateDirection(double lat1, double lon1, double lat2, double lon2) {
+        //Gives you direction TO point 2
+
+        String direction = "";
+        double dLat = (lat2 - lat1) * Math.PI / 180;
+        double dLon = (lon2 - lon1) * Math.PI / 180;
+
+        double degrees = Math.atan2(dLat, dLon) * 180/Math.PI;
+
+        //List with all directions
+        List<String> coordNames = Arrays.asList("North", "North East", "East", "South East", "South", "South West", "West", "North West", "North");
+
+        int coordIndex = (int) Math.round(degrees/45);
+        if (coordIndex < 0) {
+            coordIndex = coordIndex + 8;
+        }
+
+        return coordNames.get(coordIndex); // returns the coordinate value
+    }
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
