@@ -12,8 +12,10 @@
     <string name="total_clue">6</string>
 
     <!-- Camera Activity -->
+    <string name="curClueNum">curClueNum</string>
     <string name="file_name">takenImage</string>
     <string name="suffix">.jpg</string>
+    <string name="s3bucket">olin-mobile-proto</string>
 
     <!-- ClueFetch Fragment -->
     <string name="clue">Clue</string>
@@ -25,7 +27,4 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="last_clue">This is the last challenge</string>
     <string name="first_clue">This is the first challenge</string>
-
-
-
 </resources>

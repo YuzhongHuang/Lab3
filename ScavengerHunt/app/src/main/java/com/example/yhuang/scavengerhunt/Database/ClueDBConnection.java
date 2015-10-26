@@ -97,7 +97,7 @@ public class ClueDBConnection {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Error", error.getMessage());
+                        Log.e("Error: ", error.getMessage());
                     }
                 }
         );

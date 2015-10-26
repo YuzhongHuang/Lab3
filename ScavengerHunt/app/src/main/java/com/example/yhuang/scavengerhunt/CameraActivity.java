@@ -27,7 +27,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         Intent mIntent = getIntent();
-        curClueNum = mIntent.getIntExtra("curClueNum", 0);
+        curClueNum = mIntent.getIntExtra(getResources().getString(R.string.curClueNum), 0);
 
         onLaunchCamera(this.findViewById(android.R.id.content).getRootView());
     }
@@ -96,7 +96,7 @@ public class CameraActivity extends AppCompatActivity {
         File fileToUpload = new File(filename);
 
         transferUtility.upload(
-                "olin-mobile-proto",     /* The bucket to upload to */
+                getResources().getString(R.string.s3bucket),     /* The bucket to upload to */
                 uuid,    /* The key for the uploaded object */
                 fileToUpload        /* The file where the data to upload exists */
         );
