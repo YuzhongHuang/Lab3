@@ -80,7 +80,7 @@ public class CameraListener implements View.OnClickListener {
                             MainActivity.locationMap.get(m_curClueNum).lat, MainActivity.locationMap.get(m_curClueNum).lon);
 
                     Toast.makeText(m_activity, clue,
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_LONG).show();
                 }
             });
 
