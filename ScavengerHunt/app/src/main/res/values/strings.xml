@@ -19,4 +19,7 @@
     <string name="last_clue">This is the last challenge</string>
     <string name="first_clue">This is the first challenge</string>
 
+    <!--ClueDBConnection -->
+    <string name="imageKey">imageKey</string>
+
 </resources>

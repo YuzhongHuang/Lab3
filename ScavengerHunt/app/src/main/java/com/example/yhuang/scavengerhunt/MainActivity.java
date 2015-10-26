@@ -12,6 +12,8 @@ import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Database.ClueRow;
+import com.example.yhuang.scavengerhunt.Fragments.StartPage;
+
 import java.util.Map;
 
 /**
@@ -45,9 +47,13 @@ public class MainActivity extends AppCompatActivity {
                 locationMap = locationArray;
             }
         });
-
         //begin fragment transaction to ClueFetch
-        changeToClue();// should first change to the start page fragment
+        changeToMain();// should first change to the start page fragment
+    }
+
+    public void changeToMain() {
+        StartPage start_fragment = new StartPage();
+        transitionToFragment(start_fragment);
     }
 
     //change to ClueFetch fragment

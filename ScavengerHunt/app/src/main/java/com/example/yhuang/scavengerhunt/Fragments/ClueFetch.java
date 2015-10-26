@@ -1,6 +1,8 @@
 package com.example.yhuang.scavengerhunt.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,9 +50,46 @@ public class ClueFetch extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
-
-        Activity activity = getActivity(); //get the activity
+        final Activity activity = getActivity(); //get the activity
         ButterKnife.bind(this, rootView); // bind butter knife
+
+        final AlertDialog.Builder adb = new AlertDialog.Builder(activity);
+        adb.setTitle("Instructions");
+        adb.setMessage("For each of the six clues, watch the video");
+        adb.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                adb.setMessage("After going to the place, take a picture.");
+                adb.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        adb.setMessage("Upload the picture to complete the level");
+                        adb.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(getActivity(), "You are all set", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        adb.show();
+                    }
+                });
+                adb.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Do Nothing
+                    }
+                });
+                adb.show();
+            }
+        });
+        adb.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Do nothing
+            }
+        });
+        adb.show();
+
         GpsDetection gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
         PackageManager packageManager = activity.getPackageManager(); // get the Package Manager
 
