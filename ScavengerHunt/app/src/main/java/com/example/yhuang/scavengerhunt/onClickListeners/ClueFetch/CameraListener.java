@@ -65,6 +65,7 @@ public class CameraListener implements View.OnClickListener {
         if (m_getSpot) {
             //send intent to CameraActivity
             Intent intent = new Intent(m_activity, CameraActivity.class);
+            intent.putExtra("curClueNum", m_curClueNum);
             m_activity.startActivity(intent);
         } else {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
