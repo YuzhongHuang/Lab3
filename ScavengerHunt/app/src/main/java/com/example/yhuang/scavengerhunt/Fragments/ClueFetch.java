@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 public class ClueFetch extends Fragment {
 
     public static int curClueNum = 1;
+    private static int firstRules = 1; //Reading the rules for the first time
 
     @Bind(R.id.currentClue) TextView curClue;
     @Bind(R.id.videoClue) VideoView clueVideo;
@@ -52,44 +53,45 @@ public class ClueFetch extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_clue_fetch, container, false);
         final Activity activity = getActivity(); //get the activity
         ButterKnife.bind(this, rootView); // bind butter knife
-
-        final AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-        adb.setTitle("Instructions");
-        adb.setMessage("For each of the six clues, watch the video");
-        adb.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                adb.setMessage("After going to the place, take a picture.");
-                adb.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        adb.setMessage("Upload the picture to complete the level");
-                        adb.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(getActivity(), "You are all set", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        adb.show();
-                    }
-                });
-                adb.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //Do Nothing
-                    }
-                });
-                adb.show();
-            }
-        });
-        adb.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Do nothing
-            }
-        });
-        adb.show();
-
+        if (firstRules == 1) {
+            final AlertDialog.Builder adb = new AlertDialog.Builder(activity);
+            adb.setTitle("Instructions");
+            adb.setMessage("For each of the six clues, watch the video");
+            adb.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    adb.setMessage("After going to the place, take a picture.");
+                    adb.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            adb.setMessage("Upload the picture to complete the level");
+                            adb.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(getActivity(), "You are all set", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            adb.show();
+                        }
+                    });
+                    adb.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Do Nothing
+                        }
+                    });
+                    adb.show();
+                }
+            });
+            adb.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //Do nothing
+                }
+            });
+            adb.show();
+            firstRules = 0;
+        }
         GpsDetection gpsInfo = new GpsDetection(rootView.getContext()); // get the GPS detection fragment
         PackageManager packageManager = activity.getPackageManager(); // get the Package Manager
 

@@ -1,18 +1,18 @@
 package com.example.yhuang.scavengerhunt;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.util.Log;
-import com.example.yhuang.scavengerhunt.Database.LocationInterface;
 import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Database.ClueRow;
 import com.example.yhuang.scavengerhunt.Fragments.StartPage;
+import com.example.yhuang.scavengerhunt.Utils.HasStarted;
 
 import java.util.Map;
 
@@ -48,7 +48,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //begin fragment transaction to ClueFetch
-        changeToMain();// should first change to the start page fragment
+        System.out.println("Going to start main");
+        Intent intent = this.getIntent();
+        String strdata = this.getIntent().getStringExtra("Class");
+        if (strdata != null) {
+            System.out.println(intent);
+            if (strdata.equals("CameraActivity")) {
+                Log.d("Intent String", strdata);
+                Log.d("Change to Clue", "");
+                changeToClue();
+            } else {
+                Log.d("Change to Main", "");
+                changeToMain();
+            }
+        }else {
+            Log.d("Change to Main", "");
+            changeToMain();// should first change to the start page fragment
+        }
     }
 
     public void changeToMain() {
