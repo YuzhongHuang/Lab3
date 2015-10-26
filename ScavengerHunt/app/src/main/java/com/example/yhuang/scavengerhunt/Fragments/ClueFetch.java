@@ -59,7 +59,7 @@ public class ClueFetch extends Fragment {
 
         // set up onClickListeners
         video.setOnClickListener(new VideoListener(curClueNum, video, clueVideo, activity));
-        camera.setOnClickListener(new CameraListener(gpsInfo, activity, packageManager));
+        camera.setOnClickListener(new CameraListener(gpsInfo, activity, packageManager,curClueNum));
         prev.setOnClickListener(new PreviousListener(activity, this));
         next.setOnClickListener(new NextListener(activity, this));
         return rootView;
