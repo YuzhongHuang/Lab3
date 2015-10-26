@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.yhuang.scavengerhunt.Utils.LocalUUID;
-import com.example.yhuang.scavengerhunt.Utils.S3;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,9 +70,9 @@ public class CameraActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode != RESULT_CANCELED && resultCode == RESULT_OK) {
             Toast.makeText(this, mCurrentPhotoPath, Toast.LENGTH_LONG).show();
-            uuid = LocalUUID.getUUID(mCurrentPhotoPath);
-
-            new S3.UploadImage().execute(mCurrentPhotoPath, uuid);
+            uuid = LocalUUID.getUUID();
+            Upload(mCurrentPhotoPath, LocalUUID.getUUID());
+            //new S3.UploadImage().execute(mCurrentPhotoPath, uuid);
 
         } else {
             Toast.makeText(this, R.string.no_picture, Toast.LENGTH_SHORT).show();
@@ -78,6 +80,18 @@ public class CameraActivity extends AppCompatActivity {
 
         Intent MainActivity = new Intent(this, MainActivity.class);
         this.startActivity(MainActivity);
+    }
+
+    public void Upload (String filename, String uuid) {
+        AmazonS3Client s3Client = new AmazonS3Client();
+        TransferUtility transferUtility = new TransferUtility(s3Client,this);
+        File fileToUpload = new File(filename);
+
+        TransferObserver observer = transferUtility.upload(
+                "olin-mobile-proto",     /* The bucket to upload to */
+                uuid,    /* The key for the uploaded object */
+                fileToUpload        /* The file where the data to upload exists */
+        );
     }
 
     private File createImageFile() throws IOException {
@@ -91,7 +105,7 @@ public class CameraActivity extends AppCompatActivity {
                 storageDir      /* directory */
         );
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
