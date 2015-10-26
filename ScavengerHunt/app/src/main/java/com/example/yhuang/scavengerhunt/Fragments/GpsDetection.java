@@ -18,7 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.yhuang.scavengerhunt.Database.ClueRow;
+import com.example.yhuang.scavengerhunt.MainActivity;
 import com.example.yhuang.scavengerhunt.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class GpsDetection extends Service implements LocationListener {
 
@@ -57,7 +64,6 @@ public class GpsDetection extends Service implements LocationListener {
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
             } else {
-                this.canGetLocation = true;
                 // First get location from Network Provider
                 if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(
@@ -124,10 +130,65 @@ public class GpsDetection extends Service implements LocationListener {
         return longitude;
     }
 
-    public boolean canGetLocation() {
+    public boolean canGetLocation(double lat1, double lon1, double lat2, double lon2) {
+        if (calculateDistance(lat1, lon1, lat2, lon2)<40){
+            Log.d("CalculateDistance",String.valueOf(calculateDistance(lat1, lon1, lat2, lon2)));
+            this.canGetLocation = Boolean.TRUE;
+        }
         return this.canGetLocation;
     }
 
+    public double calculateDistance(double lat1, double lon1, double lat2, double lon2){
+        //Returns the distance in meters
+        System.out.println(lat1);
+        System.out.println(lon1);
+        System.out.println(lat2);
+        System.out.println(lon2);
+
+        double R = 6378.137; // Radius of earth in KM
+        /*
+        double dLat = (lat2 - lat1) * Math.PI / 180;
+        double dLon = (lon2 - lon1) * Math.PI / 180;
+
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180)
+                * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double d = R * c;
+        */
+
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+
+        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double d = R * c;
+
+        double distance = (d * 1000); //In meters
+        System.out.println(distance);
+        return Math.abs(distance);
+    }
+
+    public String calculateDirection(double lat1, double lon1, double lat2, double lon2) {
+        //Gives you direction TO point 2
+
+        String direction = "";
+        double dLat = (lat2 - lat1) * Math.PI / 180;
+        double dLon = (lon2 - lon1) * Math.PI / 180;
+
+        double degrees = Math.atan2(dLat, dLon) * 180/Math.PI;
+
+        // fix negative degrees
+        List<String> coordNames = Arrays.asList("North", "North East", "East", "South East", "South", "South West", "West", "North West", "North");
+
+        int coordIndex = (int) Math.round(degrees/45);
+        if (coordIndex < 0) {
+            coordIndex = coordIndex + 8;
+        }
+
+        return coordNames.get(coordIndex); // returns the coordinate value
+    }
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);

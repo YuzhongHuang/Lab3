@@ -5,12 +5,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.yhuang.scavengerhunt.CameraActivity;
+import com.example.yhuang.scavengerhunt.Database.ClueRow;
 import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
+import com.example.yhuang.scavengerhunt.MainActivity;
 import com.example.yhuang.scavengerhunt.R;
+
+import java.util.Map;
 
 /**
  * When the camera button is hit, the
@@ -33,15 +38,20 @@ public class CameraListener implements View.OnClickListener {
     private GpsDetection m_gpsInfo;
     private Activity m_activity;
     private PackageManager m_packageManager;
+    //private Map<Integer,ClueRow.Row> locationMap = MainActivity.locationMap;
+    private int m_curClueNum;
 
-    public CameraListener (GpsDetection gpsInfo, Activity activity, PackageManager packageManager) {
+    public CameraListener (GpsDetection gpsInfo, Activity activity, PackageManager packageManager, int curClueNum) {
         m_gpsInfo = gpsInfo;
         m_activity = activity;
         m_packageManager = packageManager;
+        m_curClueNum = curClueNum;
     }
 
     @Override public void onClick(View v) {
-        Boolean m_getSpot = m_gpsInfo.canGetLocation(); //update user's GPS status
+
+        Boolean m_getSpot = m_gpsInfo.canGetLocation(m_gpsInfo.latitudeInfo(),m_gpsInfo.longitudeInfo(),
+                MainActivity.locationMap.get(m_curClueNum).lat, MainActivity.locationMap.get(m_curClueNum).lon); //update user's GPS status
 
         //Using PackageManager to check if an Android device has a camera from within a fragment
         if(!m_packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
@@ -64,7 +74,12 @@ public class CameraListener implements View.OnClickListener {
             alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(m_activity, "hint",
+                    String clue = Double.toString(m_gpsInfo.calculateDistance(m_gpsInfo.latitudeInfo(),
+                            m_gpsInfo.longitudeInfo(), MainActivity.locationMap.get(m_curClueNum).lat, MainActivity.locationMap.get(m_curClueNum).lon))
+                            + " " + m_gpsInfo.calculateDirection(m_gpsInfo.latitudeInfo(),m_gpsInfo.longitudeInfo(),
+                            MainActivity.locationMap.get(m_curClueNum).lat, MainActivity.locationMap.get(m_curClueNum).lon);
+
+                    Toast.makeText(m_activity, clue,
                             Toast.LENGTH_SHORT).show();
                 }
             });
