@@ -5,9 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import android.util.Log;
-import com.example.yhuang.scavengerhunt.Database.LocationInterface;
 import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;

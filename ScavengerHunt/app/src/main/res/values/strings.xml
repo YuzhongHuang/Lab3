@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">Scavenger Hunt</string>
+    <string name="AccessKeyId">AKIAISEFKD6O3QSZGHUQ</string>
+    <string name="Secret_Access_Key">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</string>
 
+    <!-- Default -->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="new_game">New Game</string>
     <string name="resume_game">Resume</string>
     <string name="no_picture">Picture was not taken</string>
     <string name="total_clue">6</string>
+
+    <!-- Camera Activity -->
+    <string name="file_name">takenImage</string>
+    <string name="suffix">.jpg</string>
 
     <!-- ClueFetch Fragment -->
     <string name="clue">Clue</string>
@@ -18,5 +25,7 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="last_clue">This is the last challenge</string>
     <string name="first_clue">This is the first challenge</string>
+
+
 
 </resources>

@@ -19,7 +19,6 @@ import java.io.IOException;
 public class CameraActivity extends AppCompatActivity {
 
     private final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    private String uuid;
     private int curClueNum;
     private String mCurrentPhotoPath;
 
@@ -73,8 +72,8 @@ public class CameraActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode != RESULT_CANCELED && resultCode == RESULT_OK) {
             Toast.makeText(this, mCurrentPhotoPath, Toast.LENGTH_LONG).show();
-            uuid = LocalUUID.getUUID();
-            Upload(mCurrentPhotoPath, LocalUUID.getUUID());
+            String uuid = LocalUUID.getUUID();
+            Upload(mCurrentPhotoPath, uuid);
             //new S3.UploadImage().execute(mCurrentPhotoPath, uuid);
 
         } else {
@@ -91,7 +90,7 @@ public class CameraActivity extends AppCompatActivity {
      */
 
     public void Upload (String filename, String uuid) {
-        AmazonS3Client s3Client = new AmazonS3Client(new BasicAWSCredentials("AKIAISEFKD6O3QSZGHUQ", "ETum1qfRaUFQ/ixydMBA+yBcUJLY5m8/JojEufNf"));
+        AmazonS3Client s3Client = new AmazonS3Client(new BasicAWSCredentials(getResources().getString(R.string.AccessKeyId), getResources().getString(R.string.Secret_Access_Key)));
         TransferUtility transferUtility = new TransferUtility(s3Client,this);
         ClueDBConnection clueDBConnection = new ClueDBConnection(this);
         File fileToUpload = new File(filename);
@@ -102,7 +101,7 @@ public class CameraActivity extends AppCompatActivity {
                 fileToUpload        /* The file where the data to upload exists */
         );
 
-        clueDBConnection.postIds(uuid,Integer.toString(curClueNum));
+        clueDBConnection.postIds(uuid, Integer.toString(curClueNum));
     }
 
     /**
@@ -112,12 +111,12 @@ public class CameraActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String imageFileName = "TakenImage";
+        String imageFileName = getResources().getString(R.string.file_name);
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
+                getResources().getString(R.string.suffix),         /* suffix */
                 storageDir      /* directory */
         );
         // Save a file: path for use with ACTION_VIEW intents
