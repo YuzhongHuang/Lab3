@@ -2,19 +2,15 @@ package com.example.yhuang.scavengerhunt.Database;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -101,7 +97,7 @@ public class ClueDBConnection {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Error", error.getMessage());
+                        Log.e("Error: ", error.getMessage());
                     }
                 }
         );

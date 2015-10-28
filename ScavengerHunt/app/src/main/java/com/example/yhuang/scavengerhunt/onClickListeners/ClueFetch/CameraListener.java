@@ -5,17 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.yhuang.scavengerhunt.CameraActivity;
-import com.example.yhuang.scavengerhunt.Database.ClueRow;
 import com.example.yhuang.scavengerhunt.Fragments.GpsDetection;
 import com.example.yhuang.scavengerhunt.MainActivity;
 import com.example.yhuang.scavengerhunt.R;
-
-import java.util.Map;
 
 /**
  * When the camera button is hit, the
