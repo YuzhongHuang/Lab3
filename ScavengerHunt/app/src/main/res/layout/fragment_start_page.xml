@@ -24,14 +24,4 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/resume_but"
-        android:text="@string/resume_game" android:textSize="30dp"
-        android:layout_gravity="center"
-        android:layout_below="@+id/new_game_but"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
-
 </RelativeLayout>

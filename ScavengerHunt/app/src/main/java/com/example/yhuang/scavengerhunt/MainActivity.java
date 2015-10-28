@@ -1,5 +1,6 @@
 package com.example.yhuang.scavengerhunt;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,8 @@ import com.example.yhuang.scavengerhunt.Fragments.ClueFetch;
 import com.example.yhuang.scavengerhunt.Database.CallbackInterface;
 import com.example.yhuang.scavengerhunt.Database.ClueDBConnection;
 import com.example.yhuang.scavengerhunt.Database.ClueRow;
+import com.example.yhuang.scavengerhunt.Fragments.StartPage;
+
 import java.util.Map;
 
 /**
@@ -44,7 +47,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //begin fragment transaction to ClueFetch
-        changeToClue();// should first change to the start page fragment
+        //Checks the string that intent passes
+        Intent intent = this.getIntent();
+        String strdata = this.getIntent().getStringExtra("Class");
+        //Depending on the string, change to the specific fragment
+        if (strdata != null) {
+            System.out.println(intent);
+            if (strdata.equals("CameraActivity")) {
+                changeToClue();
+            } else {
+                changeToMain();
+            }
+        }else {
+            changeToMain();// should first change to the start page fragment
+        }
+    }
+
+    public void changeToMain() {
+        //Chenge to the start page
+        StartPage start_fragment = new StartPage();
+        transitionToFragment(start_fragment);
     }
 
     //change to ClueFetch fragment

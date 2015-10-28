@@ -80,7 +80,9 @@ public class CameraActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_picture, Toast.LENGTH_SHORT).show();
         }
 
+
         Intent MainActivity = new Intent(this, MainActivity.class);
+        MainActivity.putExtra("Class", "CameraActivity");
         this.startActivity(MainActivity);
     }
 
