@@ -103,14 +103,6 @@ public class GpsDetection extends Service implements LocationListener {
         return location;
     }
 
-    /*
-    //Stop using GPS listener
-    public void stopUsingGPS() {
-        if (locationManager != null) {
-            locationManager.removeUpdates(GpsDetection.this);
-        }
-    }*/
-
     public double latitudeInfo() {
         //Gives the latitude of the user
         if (location != null) {
@@ -129,7 +121,8 @@ public class GpsDetection extends Service implements LocationListener {
 
     public boolean canGetLocation(double lat1, double lon1, double lat2, double lon2) {
         //Returns a boolean if the users are/aren't within a threshold (40 meters)
-        if (calculateDistance(lat1, lon1, lat2, lon2)<40){
+        //We changed it to 200 for testing safely
+        if (calculateDistance(lat1, lon1, lat2, lon2)<200){
             Log.d("CalculateDistance",String.valueOf(calculateDistance(lat1, lon1, lat2, lon2)));
             this.canGetLocation = Boolean.TRUE;
         }

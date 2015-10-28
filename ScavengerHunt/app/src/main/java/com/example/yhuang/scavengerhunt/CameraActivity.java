@@ -6,7 +6,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -82,7 +81,6 @@ public class CameraActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_picture, Toast.LENGTH_SHORT).show();
         }
 
-        Log.d("lalala: ", "lalallalalalal");
 
         Intent MainActivity = new Intent(this, MainActivity.class);
         MainActivity.putExtra("Class", "CameraActivity");
